@@ -11,9 +11,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.TextComponent;
+import com.imaginarycode.minecraft.advancedbungeeannouncer.utils.FontFormat;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -59,14 +57,14 @@ public class AnnouncingTask implements Runnable {
             if (announcement == null)
                 continue;
 
-            List<BaseComponent[]> components = new ArrayList<>();
+            List<String> components = new ArrayList<>();
 
             for (String line : announcement.getText()) {
-                components.add(TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', AdvancedBungeeAnnouncer.getConfiguration().getString("prefix", "") + line)));
+                components.add(FontFormat.translateString(AdvancedBungeeAnnouncer.getConfiguration().getString("prefix", "") + line));
             }
 
             for (ProxiedPlayer player : entry.getValue().getPlayers()) {
-                for (BaseComponent[] component : components) {
+                for (String component : components) {
                     player.sendMessage(component);
                 }
             }
